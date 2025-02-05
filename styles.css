@@ -32,7 +32,7 @@ nav {
     background-color: rgba(106, 27, 154, 0.9);
     color: white;
     display: flex;
-    justify-content: center; /* Center the content horizontally */
+    justify-content: space-between; /* Space out the logo and nav links */
     align-items: center;
     padding: 10px 20px;
     z-index: 1000;
@@ -42,7 +42,7 @@ nav {
 nav .logo {
     font-size: 1.5rem;
     font-weight: bold;
-    margin-right: auto; /* Push the logo to the left */
+    margin-left: 20px; /* Adjust margin to align logo */
 }
 
 nav ul {
@@ -65,6 +65,16 @@ nav ul li a {
 
 nav ul li a:hover {
     color: #ff5722;
+}
+
+/* Optional: Add a container to center the nav content if needed */
+.nav-container {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 /* Sections */
@@ -338,4 +348,82 @@ footer {
 
 #back-to-top:hover {
     background-color: #8e24aa;
+}
+
+/* Games Section */
+#games {
+    text-align: center;
+    padding: 50px 20px;
+    background: #f8f9fa;
+}
+
+/* Grid Layout */
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Game Card Styling */
+.game-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.game-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Game Images */
+.game-card img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+/* Headings & Taglines */
+.game-card h3 {
+    font-size: 22px;
+    margin-top: 10px;
+    color: #333;
+}
+
+.tagline {
+    font-size: 16px;
+    color: #777;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Game Features List */
+.game-features {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0;
+}
+
+.game-features li {
+    font-size: 14px;
+    color: #555;
+    padding: 5px 0;
+    display: flex;
+    align-items: center;
+}
+
+.game-features li strong {
+    margin-left: 8px;
+}
+
+/* CTA (Call to Action) */
+.cta {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 15px;
 }
