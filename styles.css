@@ -32,19 +32,29 @@ nav {
     background-color: rgba(106, 27, 154, 0.9);
     color: white;
     display: flex;
-    justify-content: space-between; /* Space out the logo and nav links */
+    justify-content: center; /* Center the entire nav */
     align-items: center;
     padding: 10px 20px;
     z-index: 1000;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Container to center navigation items */
+.nav-container {
+    max-width: 900px; /* Adjust width as needed */
+    width: 100%;
+    display: flex;
+    justify-content: space-between; /* Keeps logo & menu aligned */
+    align-items: center;
+}
+
+/* Logo */
 nav .logo {
     font-size: 1.5rem;
     font-weight: bold;
-    margin-left: 20px; /* Adjust margin to align logo */
 }
 
+/* Navigation links */
 nav ul {
     list-style: none;
     display: flex;
@@ -66,6 +76,7 @@ nav ul li a {
 nav ul li a:hover {
     color: #ff5722;
 }
+
 
 /* Optional: Add a container to center the nav content if needed */
 .nav-container {
