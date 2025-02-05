@@ -10,7 +10,7 @@ const firebaseConfig = {
   };
   
 // Initialize Firebase
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
 import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
@@ -63,7 +63,7 @@ document.getElementById("sign-in-btn").addEventListener("click", async () => {
         const user = userCredential.user;
 
         // Redirect to Dashboard after successful sign-in
-        window.location.href = "index.html"; // Make sure to have a index.html page
+        window.location.href = "index.html"; // Make sure to have a inde.html page
 
     } catch (error) {
         console.error("Error signing in:", error);
