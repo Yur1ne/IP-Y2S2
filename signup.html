@@ -127,10 +127,13 @@
     <script type="module">
         // Firebase Configuration
         const firebaseConfig = {
-            apiKey: "AIzaSyDaC4DRzgD38qdSiBYGlNoMB28GMbWXY6M",
-            authDomain: "dda-itd-exd-assg2-d67b4.firebaseapp.com",
-            projectId: "dda-itd-exd-assg2-d67b4",
-            appId: "1:6027046720:web:8181157473379965b0d4a5"
+            apiKey: "AIzaSyAPqBbtP-KqLLVt0NcuVIKBDDz7jJa6Bak",
+            authDomain: "ip-y2s2.firebaseapp.com",
+            databaseURL: "https://ip-y2s2-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "ip-y2s2",
+            storageBucket: "ip-y2s2.firebasestorage.app",
+            messagingSenderId: "191631267863",
+            appId: "1:191631267863:web:ada36be630772321afe452"
         };
 
         // Initialize Firebase
@@ -172,8 +175,8 @@
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 // Store the username in Firebase Firestore or Realtime Database (optional)
                 // For now, just displaying a success message
-                alert(`Account created for ${username}`);
-                window.location.href = "dashboard.html"; // Redirect to dashboard after successful sign-up
+                alert(Account created for ${username});
+                window.location.href = "index.html"; // Redirect to dashboard after successful sign-up
             } catch (error) {
                 console.error("Error signing up:", error);
                 if (error.code === 'auth/invalid-email') {
