@@ -7,8 +7,8 @@ const firebaseConfig = {
     storageBucket: "ip-y2s2.firebasestorage.app",
     messagingSenderId: "191631267863",
     appId: "1:191631267863:web:ada36be630772321afe452"
-};
-
+  };
+  
 // Initialize Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
@@ -24,8 +24,7 @@ const dbFirestore = getFirestore(app);
 document.getElementById("sign-up-btn").addEventListener("click", async () => {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
-    const username = document.getElementById("username").value;
-
+    const username = document.getElementById("username").value; // Added username field
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
@@ -45,11 +44,13 @@ document.getElementById("sign-up-btn").addEventListener("click", async () => {
         });
 
         console.log("User signed up and added to Realtime Database");
-        window.location.href = "index.html"; // Redirect to dashboard
+
+        // Redirect to Dashboard after successful sign-up
+        window.location.href = "index.html"; // Make sure to have a dashboard.html page
 
     } catch (error) {
         console.error("Error signing up:", error);
-        alert("Error signing up: " + error.message); // Show error message to user
+        document.getElementById("user-info").innerHTML = "Error: " + error.message;
     }
 });
 
@@ -57,29 +58,25 @@ document.getElementById("sign-up-btn").addEventListener("click", async () => {
 document.getElementById("sign-in-btn").addEventListener("click", async () => {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
-
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
-        window.location.href = "index.html"; // Redirect to dashboard
+        // Redirect to Dashboard after successful sign-in
+        window.location.href = "index.html"; // Make sure to have a inde.html page
 
     } catch (error) {
         console.error("Error signing in:", error);
-        alert("Error signing in: " + error.message); // Show error message to user
+        document.getElementById("user-info").innerHTML = "Error: " + error.message;
     }
 });
 
 // Sign Out Function
 document.getElementById("sign-out-btn").addEventListener("click", async () => {
-    try {
-        await signOut(auth);
-        alert("You have signed out."); // Show sign-out message
-        window.location.href = "login.html"; // Redirect to login page
-    } catch (error) {
-        console.error("Error signing out:", error);
-        alert("Error signing out: " + error.message); // Show error message to user
-    }
+    await signOut(auth);
+    document.getElementById("user-info").innerHTML = "You have signed out.";
+    document.getElementById("sign-in-btn").style.display = "inline";
+    document.getElementById("sign-out-btn").style.display = "none";
 });
 
 // Fetch Data from Realtime Database (on dashboard)
@@ -100,14 +97,10 @@ async function fetchRealtimeUserData() {
 
 // Fetch Data from Firestore
 document.getElementById("fetch-firestore-btn").addEventListener("click", async () => {
-    try {
-        const querySnapshot = await getDocs(collection(dbFirestore, "users"));
-        querySnapshot.forEach((doc) => {
-            console.log(doc.id, " => ", doc.data());
-        });
-    } catch (error) {
-        console.error("Error fetching Firestore data:", error);
-    }
+    const querySnapshot = await getDocs(collection(dbFirestore, "users"));
+    querySnapshot.forEach((doc) => {
+        console.log(doc.id, " => ", doc.data());
+    });
 });
 
 // Fetch Data from Realtime Database
