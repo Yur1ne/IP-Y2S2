@@ -63,7 +63,7 @@ document.getElementById("sign-in-btn").addEventListener("click", async () => {
         const user = userCredential.user;
 
         // Redirect to Dashboard after successful sign-in
-        window.location.href = "dashboard.html"; // Make sure to have a dashboard.html page
+        window.location.href = "index.html"; // Make sure to have a index.html page
 
     } catch (error) {
         console.error("Error signing in:", error);
