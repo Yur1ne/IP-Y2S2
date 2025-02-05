@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Quest - Login</title>
+    <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js"></script>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('https://images5.alphacoders.com/380/380057.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .auth-container {
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            text-align: center;
+            position: relative;
+        }
+
+        .auth-container h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .auth-container p {
+            font-size: 1em;
+            margin-bottom: 30px;
+            color: #555;
+        }
+
+        .auth-container input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1em;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .auth-container input:focus {
+            border-color: #007bff;
+        }
+
+        .auth-container button {
+            width: 100%;
+            padding: 14px;
+            margin: 15px 0;
+            border: none;
+            border-radius: 8px;
+            background-color: #007bff;
+            color: white;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .auth-container button:hover {
+            background-color: #0056b3;
+            transform: scale(1.02);
+        }
+
+        .secondary-btn {
+            background-color: #28a745;
+        }
+
+        .secondary-btn:hover {
+            background-color: #218838;
+        }
+
+        #reset-password-btn {
+            background-color: #ed4a4a;
+            color: black;
+        }
+
+        #reset-password-btn:hover {
+            background-color: #ed8181;
+        }
+
+        #sign-out-btn {
+            background-color: #f63145;
+        }
+
+        #sign-out-btn:hover {
+            background-color: #c82333;
+        }
+
+        #error-message {
+            display: none;
+            padding: 10px;
+            margin-top: 20px;
+            font-size: 0.9em;
+            border-radius: 5px;
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .divider {
+            margin: 20px 0;
+            font-size: 0.9em;
+            color: #aaa;
+            text-align: center;
+            position: relative;
+        }
+
+        .divider:before,
+        .divider:after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 40%;
+            height: 1px;
+            background: #ccc;
+        }
+
+        .divider:before {
+            left: 0;
+        }
+
+        .divider:after {
+            right: 0;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <h1>Number Quest</h1>
+        <p>Log in to access your VR Learning experience.</p>
+
+        <div id="auth-section">
+            <input type="email" id="email" placeholder="Email" />
+            <input type="password" id="password" placeholder="Password" />
+            <button id="sign-in-btn">Sign In</button>
+            <button id="sign-out-btn" style="display: none;">Sign Out</button>
+
+            <div class="divider">or</div>
+
+            <button class="secondary-btn" id="signup-btn">Sign Up</button>
+            <button id="reset-password-btn">Forgot Password?</button>
+
+            <div id="user-info"></div>
+            <div id="error-message"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        const firebaseConfig = {
+            apiKey: "AIzaSyDaC4DRzgD38qdSiBYGlNoMB28GMbWXY6M",
+            authDomain: "dda-itd-exd-assg2-d67b4.firebaseapp.com",
+            projectId: "dda-itd-exd-assg2-d67b4",
+            appId: "1:6027046720:web:8181157473379965b0d4a5"
+        };
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        function showError(message) {
+            const errorMessage = document.getElementById("error-message");
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+        }
+
+        function clearError() {
+            const errorMessage = document.getElementById("error-message");
+            errorMessage.style.display = 'none';
+        }
+
+        document.getElementById("sign-in-btn").addEventListener("click", async () => {
+            clearError();
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                document.getElementById("user-info").innerHTML = `Welcome, ${userCredential.user.email}`;
+                document.getElementById("sign-in-btn").style.display = "none";
+                document.getElementById("sign-out-btn").style.display = "inline";
+                window.location.href = "dashboard.html";
+            } catch (error) {
+                showError("Invalid email or password. Please try again.");
+            }
+        });
+
+        document.getElementById("signup-btn").addEventListener("click", () => {
+        window.location.href = "signup.html";
+        });
+
+        document.getElementById("reset-password-btn").addEventListener("click", async () => {
+            clearError();
+            const email = document.getElementById("email").value;
+            try {
+                await sendPasswordResetEmail(auth, email);
+                document.getElementById("user-info").innerHTML = `Password reset email sent to ${email}`;
+            } catch (error) {
+                showError("Unable to send reset email. Try again.");
+            }
+        });
+    </script>
+</body>
+</html>

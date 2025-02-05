@@ -206,52 +206,6 @@ section.visible p {
     margin-bottom: 10px;
 }
 
-/* Login Section */
-#login {
-    background-color: white;
-}
-
-#login form {
-    background-color: #f4f4f9;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-    text-align: left;
-}
-
-#login form label {
-    font-size: 1rem;
-    color: #333;
-    margin-bottom: 5px;
-    display: block;
-}
-
-#login form input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
-}
-
-#login form button {
-    background-color: #6a1b9a;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-#login form button:hover {
-    background-color: #8e24aa;
-}
-
 /* Gallery Section */
 .gallery-grid {
     display: grid;
