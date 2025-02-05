@@ -196,7 +196,7 @@
             const password = document.getElementById("password").value;
             try {
                 const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                document.getElementById("user-info").innerHTML = Welcome, ${userCredential.user.email};
+                document.getElementById("user-info").innerHTML = `Welcome, ${userCredential.user.email}`;
                 document.getElementById("sign-in-btn").style.display = "none";
                 document.getElementById("sign-out-btn").style.display = "inline";
                 window.location.href = "index.html";
@@ -204,7 +204,6 @@
                 showError("Invalid email or password. Please try again.");
             }
         });
-
         document.getElementById("signup-btn").addEventListener("click", () => {
         window.location.href = "signup.html";
         });
@@ -214,7 +213,7 @@
             const email = document.getElementById("email").value;
             try {
                 await sendPasswordResetEmail(auth, email);
-                document.getElementById("user-info").innerHTML = Password reset email sent to ${email};
+                document.getElementById("user-info").innerHTML = `Password reset email sent to ${email}`;
             } catch (error) {
                 showError("Unable to send reset email. Try again.");
             }
