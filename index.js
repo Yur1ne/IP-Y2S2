@@ -46,7 +46,7 @@ document.getElementById("sign-up-btn").addEventListener("click", async () => {
         console.log("User signed up and added to Realtime Database");
 
         // Redirect to Dashboard after successful sign-up
-        window.location.href = "dashboard.html"; // Make sure to have a dashboard.html page
+        window.location.href = "index.html"; // Make sure to have a dashboard.html page
 
     } catch (error) {
         console.error("Error signing up:", error);
