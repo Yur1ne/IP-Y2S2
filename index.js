@@ -1,4 +1,3 @@
-// Firebase Configuration
 const firebaseConfig = {
     apiKey: "AIzaSyAPqBbtP-KqLLVt0NcuVIKBDDz7jJa6Bak",
     authDomain: "ip-y2s2.firebaseapp.com",
@@ -8,9 +7,9 @@ const firebaseConfig = {
     messagingSenderId: "191631267863",
     appId: "1:191631267863:web:ada36be630772321afe452"
   };
-  
+
 // Initialize Firebase
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
 import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
@@ -63,7 +62,7 @@ document.getElementById("sign-in-btn").addEventListener("click", async () => {
         const user = userCredential.user;
 
         // Redirect to Dashboard after successful sign-in
-        window.location.href = "index.html"; // Make sure to have a inde.html page
+        window.location.href = "index.html"; // Make sure to have a dashboard.html page
 
     } catch (error) {
         console.error("Error signing in:", error);
