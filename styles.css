@@ -24,68 +24,131 @@ body {
     background-color: #e64a19;
 }
 
-/* Navigation Bar */
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Navigation Bar Styles */
 nav {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    background-color: rgba(106, 27, 154, 0.9);
-    color: white;
-    display: flex;
-    justify-content: center; /* Center the entire nav */
-    align-items: center;
+    background-color: #d9c9f3; /* Light purple color */
     padding: 10px 20px;
-    z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Container to center navigation items */
-.nav-container {
-    max-width: 900px; /* Adjust width as needed */
-    width: 100%;
     display: flex;
-    justify-content: space-between; /* Keeps logo & menu aligned */
+    justify-content: space-between;
     align-items: center;
+    border-radius: 20px; /* Curved borders */
+    margin: 10px auto;
+    max-width: 90%; /* Make nav bar smaller */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    position: sticky; /* Makes the navbar sticky */
+    top: 10px; /* Sticks 10px from the top of the viewport */
+    z-index: 1000; /* Ensures it stays above other elements */
 }
 
-/* Logo */
 nav .logo {
     font-size: 1.5rem;
     font-weight: bold;
+    color: #5e47b0;
 }
 
-/* Navigation links */
+/* Navigation Links */
 nav ul {
-    list-style: none;
     display: flex;
+    justify-content: center; /* Center items */
+    list-style-type: none;
+    gap: 20px; /* Spacing between nav items */
     margin: 0;
     padding: 0;
 }
 
-nav ul li {
-    margin: 0 15px;
-}
-
 nav ul li a {
-    color: white;
     text-decoration: none;
     font-size: 1rem;
-    transition: color 0.3s ease;
+    color: #5e47b0;
+    padding: 8px 15px;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 8px;
 }
 
 nav ul li a:hover {
-    color: #ff5722;
+    background-color: #b49edc; /* Darker purple on hover */
+    color: #fff;
+}
+
+nav .profile-button {
+    background-color: #5e47b0;
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 12px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+nav .profile-button:hover {
+    background-color: #452e81;
+}
+
+/* Hamburger Button */
+.hamburger {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Mobile View */
+@media screen and (max-width: 768px) {
+    nav ul {
+        display: none; /* Hide links by default */
+        flex-direction: column;
+        background-color: #d9c9f3;
+        position: absolute;
+        top: 60px;
+        right: 10px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    nav ul li {
+        margin: 10px 0;
+        text-align: center;
+    }
+
+    nav ul.hidden {
+        display: none; /* Keep hidden class for toggling */
+    }
+
+    nav ul.visible {
+        display: flex; /* Display links when visible class is added */
+    }
+
+    .hamburger {
+        display: block; /* Show hamburger button in mobile view */
+    }
+}
+
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
 
-/* Optional: Add a container to center the nav content if needed */
-.nav-container {
+
+/* Hero Section */
+#hero {
+    text-align: center;
+    padding: 100px 20px;
+    background-color: #f7f4fb; /* Light background for contrast */
+    color: #5e47b0;
+}
+
+/* Utility Classes */
+.container {
     max-width: 1200px;
-    width: 100%;
     margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    padding: 20px;
 }
 
 /* Sections */
@@ -392,3 +455,11 @@ footer {
     color: #333;
     margin-top: 15px;
 }
+
+.multiple-text {
+    display: inline-block; /* Ensures text is properly displayed */
+    font-weight: bold;
+    color: white; /* Adjust color if necessary */
+    font-size: 1.5rem; /* Adjust as per your UI */
+}
+

@@ -116,3 +116,18 @@ document.getElementById("fetch-realtime-btn").addEventListener("click", async ()
         console.error("Error fetching data:", error);
     }
 });
+
+// JavaScript to toggle navigation menu
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('nav-links');
+
+hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('hidden');
+    navLinks.classList.toggle('visible');
+});
+
+
+document.querySelector('.profile-button').addEventListener('click', function() {
+    console.log('Profile button clicked!');
+});
+
