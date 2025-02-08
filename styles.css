@@ -31,34 +31,42 @@ body {
     box-sizing: border-box;
 }
 
-/* Navigation Bar Styles */
+/* General Navigation Bar Styles */
 nav {
-    background-color: #d9c9f3; /* Light purple color */
-    padding: 10px 20px;
+    background: linear-gradient(135deg, #d9c9f3, #b49edc); /* Gradient for a modern look */
+    padding: 12px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-radius: 20px; /* Curved borders */
-    margin: 10px auto;
-    max-width: 90%; /* Make nav bar smaller */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    position: sticky; /* Makes the navbar sticky */
-    top: 10px; /* Sticks 10px from the top of the viewport */
-    z-index: 1000; /* Ensures it stays above other elements */
+    border-radius: 15px; /* Smooth curved edges */
+    margin: 15px auto;
+    max-width: 90%;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+    position: sticky;
+    top: 10px;
+    z-index: 1000;
 }
 
+/* Logo Styling */
 nav .logo {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: bold;
     color: #5e47b0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: transform 0.3s ease-in-out;
+}
+
+nav .logo:hover {
+    transform: scale(1.1); /* Slight zoom effect on hover */
 }
 
 /* Navigation Links */
 nav ul {
     display: flex;
-    justify-content: center; /* Center items */
+    justify-content: center;
     list-style-type: none;
-    gap: 20px; /* Spacing between nav items */
+    gap: 25px;
     margin: 0;
     padding: 0;
 }
@@ -67,63 +75,92 @@ nav ul li a {
     text-decoration: none;
     font-size: 1rem;
     color: #5e47b0;
-    padding: 8px 15px;
-    transition: background-color 0.3s, color 0.3s;
+    padding: 10px 18px;
+    font-weight: 600;
+    transition: 0.3s ease-in-out;
     border-radius: 8px;
+    position: relative;
+}
+
+/* Smooth Hover Effect */
+nav ul li a::after {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    background: #5e47b0;
+    bottom: -3px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: width 0.3s ease-in-out;
 }
 
 nav ul li a:hover {
-    background-color: #b49edc; /* Darker purple on hover */
     color: #fff;
+    background-color: #5e47b0;
 }
 
+nav ul li a:hover::after {
+    width: 100%;
+}
+
+/* Profile Button */
 nav .profile-button {
-    background-color: #5e47b0;
-    color: #fff;
-    padding: 8px 15px;
-    border-radius: 12px;
-    transition: background-color 0.3s ease-in-out;
+    background: linear-gradient(135deg, #5e47b0, #452e81);
+    color: white;
+    padding: 10px 18px;
+    border-radius: 20px;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 nav .profile-button:hover {
-    background-color: #452e81;
+    background: #452e81;
+    transform: scale(1.05);
 }
 
-/* Hamburger Button */
+/* Hamburger Button for Mobile */
 .hamburger {
     display: none;
-    font-size: 24px;
+    font-size: 26px;
     cursor: pointer;
+    background: none;
+    border: none;
+    color: #5e47b0;
+    transition: transform 0.3s ease-in-out;
 }
 
-/* Mobile View */
+.hamburger:hover {
+    transform: rotate(180deg);
+}
+
+/* Mobile View Styling */
 @media screen and (max-width: 768px) {
     nav ul {
-        display: none; /* Hide links by default */
+        display: none;
         flex-direction: column;
-        background-color: #d9c9f3;
+        background: #d9c9f3;
         position: absolute;
-        top: 60px;
-        right: 10px;
+        top: 65px;
+        right: 15px;
+        width: 180px;
+        padding: 10px;
         border-radius: 10px;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+        text-align: center;
+    }
+
+    nav ul.visible {
+        display: flex;
     }
 
     nav ul li {
         margin: 10px 0;
-        text-align: center;
-    }
-
-    nav ul.hidden {
-        display: none; /* Keep hidden class for toggling */
-    }
-
-    nav ul.visible {
-        display: flex; /* Display links when visible class is added */
     }
 
     .hamburger {
-        display: block; /* Show hamburger button in mobile view */
+        display: block;
     }
 }
 
