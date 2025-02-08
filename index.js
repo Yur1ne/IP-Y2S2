@@ -131,3 +131,10 @@ document.querySelector('.profile-button').addEventListener('click', function() {
     console.log('Profile button clicked!');
 });
 
+function scrollTestimonials(direction) {
+    const container = document.querySelector(".testimonials-container");
+    const scrollAmount = 370; // Adjust as needed
+    container.scrollBy({ left: direction * scrollAmount, behavior: "smooth" });
+}
+
+
