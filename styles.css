@@ -655,6 +655,26 @@ footer {
     margin-left: 8px;
 }
 
+/* Call to Action Styling */
+.cta {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Tagline Section Styling */
+.game-card .tagline {
+    font-size: 16px;
+    font-weight: 600;
+    color: #4a4a4a;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+
 /* CTA (Call to Action) */
 .cta {
     font-size: 16px;
