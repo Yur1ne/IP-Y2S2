@@ -5,9 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile - Number Quest</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Link your main stylesheet -->
+    <link rel="stylesheet" href="styles.css"> <!-- Link to the main stylesheet -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
+    <!-- Navigation Bar -->
     <nav>
         <div class="logo">Number Quest</div>
         <ul>
@@ -18,10 +20,60 @@
         </ul>
     </nav>
 
+    <!-- Profile Section -->
     <section id="profile">
-        <h1>User Profile</h1>
-        <p>Welcome to your profile page!</p>
-        <!-- Add profile details here -->
+        <div class="profile-container">
+            <!-- User Avatar & Info -->
+            <div class="profile-header">
+                <img src="avatar.png" alt="User Avatar" class="profile-avatar">
+                <h2>John Doe</h2>
+                <p>Math Master | Level 7</p>
+            </div>
+
+            <!-- User Statistics -->
+            <div class="profile-stats">
+                <div class="stat-box">
+                    <i class="fas fa-clock"></i>
+                    <p>Time Played</p>
+                    <h3>12h 30m</h3>
+                </div>
+                <div class="stat-box">
+                    <i class="fas fa-trophy"></i>
+                    <p>High Score</p>
+                    <h3>9,870</h3>
+                </div>
+                <div class="stat-box">
+                    <i class="fas fa-star"></i>
+                    <p>Levels Completed</p>
+                    <h3>15</h3>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="progress-section">
+                <h3>XP Progress</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 70%;"></div>
+                </div>
+                <p>70% to Level 8</p>
+            </div>
+
+            <!-- Achievements -->
+            <div class="achievements">
+                <h3>Recent Achievements</h3>
+                <ul>
+                    <li><i class="fas fa-medal"></i> Math Genius - Scored 9,000+</li>
+                    <li><i class="fas fa-gamepad"></i> 10 Levels Completed</li>
+                    <li><i class="fas fa-clock"></i> 10 Hours of Gameplay</li>
+                </ul>
+            </div>
+
+            <!-- Profile Actions -->
+            <div class="profile-actions">
+                <button class="edit-btn">Edit Profile</button>
+                <button class="logout-btn">Logout</button>
+            </div>
+        </div>
     </section>
 </body>
 </html>
