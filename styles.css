@@ -514,13 +514,21 @@ footer {
     margin-top: 40px; /* Add space before the games section */
 }
 
-/* Grid Layout */
+/* Horizontal Scrolling Container */
+.games-grid-container {
+    display: flex;
+    overflow-x: auto;
+    padding: 20px 0;
+    gap: 30px;
+}
+
+/* Grid Layout (Horizontal) */
 .games-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    display: flex;
     gap: 30px;
     max-width: 1200px;
     margin: 0 auto;
+    flex-wrap: nowrap; /* Prevent wrapping of items to the next row */
 }
 
 /* Game Card Styling */
@@ -531,6 +539,8 @@ footer {
     padding: 20px;
     text-align: left;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    flex-shrink: 0; /* Prevent card from shrinking */
+    width: 300px; /* Set a fixed width for each card */
 }
 
 .game-card:hover {
@@ -576,6 +586,7 @@ footer {
 .game-features li strong {
     margin-left: 8px;
 }
+
 
 
 /* CTA (Call to Action) */
