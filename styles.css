@@ -341,6 +341,7 @@ section.visible p {
     overflow: hidden;
     scroll-snap-align: center;
     flex: 0 0 auto;
+    margin-bottom: 30px; /* Added space below testimonials */
 }
 
 /* Hover Effect */
@@ -387,6 +388,7 @@ section.visible p {
     cursor: pointer;
     transition: background 0.3s ease, transform 0.2s ease;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 999; /* Ensure buttons are on top */
 }
 
 .scroll-btn:hover {
@@ -416,13 +418,6 @@ section.visible p {
     .scroll-btn {
         display: none; /* Hide buttons on mobile (swiping enabled) */
     }
-}
-
-
-/* Hover Effect */
-#testimonials li:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 /* Testimonial Quote Icon */
@@ -475,7 +470,6 @@ section.visible p {
     }
 }
 
-
 /* Gallery Section */
 .gallery-grid {
     display: grid;
@@ -484,6 +478,7 @@ section.visible p {
     padding: 20px;
 }
 
+/* Ensures gallery images have enough space */
 .gallery-grid img {
     width: 100%;
     border-radius: 10px;
@@ -491,6 +486,7 @@ section.visible p {
     transition: transform 0.3s ease;
 }
 
+/* Hover effect on gallery images */
 .gallery-grid img:hover {
     transform: scale(1.05);
 }
@@ -653,25 +649,6 @@ footer {
 
 .game-features li strong {
     margin-left: 8px;
-}
-
-/* Call to Action Styling */
-.cta {
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-    margin-top: 15px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-/* Tagline Section Styling */
-.game-card .tagline {
-    font-size: 16px;
-    font-weight: 600;
-    color: #4a4a4a;
-    margin-top: 10px;
-    margin-bottom: 20px;
 }
 
 
