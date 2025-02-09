@@ -1,12 +1,13 @@
 :root {
-    --primary-pastel: #F2C6DE;       /* Soft rose pink */
-    --primary-dark: #D88C9A;         /* Muted dusty rose */
-    --secondary-pastel: #F9E2AF;     /* Warm buttery pastel */
-    --accent-pastel: #C3D8C5;        /* Soft sage green */
-    --background-light: #FEF7F1;     /* Gentle peach-tinted white */
-    --text-primary: #735D78;         /* Soft muted purple */
-    --text-secondary: #9B6A6C;       /* Subdued vintage rose */
+    --primary-pastel: #F8CFA3;       /* Soft pastel orange */
+    --primary-dark: #E89F71;         /* Muted warm orange */
+    --secondary-pastel: #F9E5A3;     /* Soft buttery yellow */
+    --accent-pastel: #B3D9A2;        /* Pastel sage green */
+    --background-light: #FFF6EC;     /* Warm cream */
+    --text-primary: #8C5A44;         /* Muted warm brown */
+    --text-secondary: #C46D5E;       /* Soft vintage red */
 }
+
 
 
 /* General Styles */
