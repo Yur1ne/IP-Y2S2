@@ -1,13 +1,14 @@
 /* Color Variables */
 :root {
-    --primary-pastel: #B8C1EC;       /* Soft periwinkle */
-    --primary-dark: #232946;         /* Deep navy */
-    --secondary-pastel: #EEBBC3;     /* Soft pink */
-    --accent-pastel: #FFD6BA;        /* Peach */
-    --background-light: #FFFAF7;     /* Off-white */
-    --text-primary: #232946;         /* Deep navy */
-    --text-secondary: #525685;       /* Muted navy */
+    --primary-pastel: #FFB347;       /* Soft orange */
+    --primary-dark: #D35400;         /* Deep orange */
+    --secondary-pastel: #FFA07A;     /* Light salmon */
+    --accent-pastel: #FFD700;        /* Gold */
+    --background-light: #FFF5E1;     /* Light peach */
+    --text-primary: #D35400;         /* Deep orange */
+    --text-secondary: #8B4513;       /* Saddle brown */
 }
+
 
 /* General Styles */
 body {
