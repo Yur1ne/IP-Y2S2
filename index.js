@@ -172,6 +172,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+
 export default Navigation;
 
 function scrollTestimonials(direction) {
@@ -180,111 +181,3 @@ function scrollTestimonials(direction) {
     container.scrollBy({ left: direction * scrollAmount, behavior: "smooth" });
 }
 
-// Navigation functionality
-const hamburger = document.querySelector('.hamburger');
-const navLinks = document.querySelector('.nav-links');
-const navItems = document.querySelectorAll('.nav-links a');
-
-// Toggle hamburger menu
-hamburger.addEventListener('click', () => {
-    // Toggle hamburger animation
-    hamburger.classList.toggle('active');
-    // Toggle navigation menu
-    navLinks.classList.toggle('active');
-});
-
-// Close mobile menu when clicking a link
-navItems.forEach(item => {
-    item.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        navLinks.classList.remove('active');
-    });
-});
-
-// Close mobile menu when clicking outside
-document.addEventListener('click', (e) => {
-    if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
-        hamburger.classList.remove('active');
-        navLinks.classList.remove('active');
-    }
-});
-
-// Add smooth scrolling to nav links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href');
-        if (targetId === '#') return;
-        
-        const targetElement = document.querySelector(targetId);
-        if (targetElement) {
-            targetElement.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
-});
-
-
-// Testimonials Navigation
-document.addEventListener('DOMContentLoaded', function() {
-    const testimonialCards = document.querySelectorAll('.testimonial-card');
-    const prevButton = document.querySelector('.prev-page');
-    const nextButton = document.querySelector('.next-page');
-    
-    const cardsPerPage = getCardsPerPage();
-    let currentPage = 0;
-    const totalPages = Math.ceil(testimonialCards.length / cardsPerPage);
-
-    function getCardsPerPage() {
-        if (window.innerWidth > 1024) return 3;
-        if (window.innerWidth > 768) return 2;
-        return 1;
-    }
-
-    function updateTestimonials() {
-        // Hide all cards
-        testimonialCards.forEach(card => {
-            card.classList.remove('active');
-        });
-
-        // Show cards for current page
-        const startIndex = currentPage * cardsPerPage;
-        const endIndex = Math.min(startIndex + cardsPerPage, testimonialCards.length);
-        
-        for (let i = startIndex; i < endIndex; i++) {
-            testimonialCards[i].classList.add('active');
-        }
-
-        // Update button states
-        prevButton.disabled = currentPage === 0;
-        nextButton.disabled = currentPage >= totalPages - 1;
-    }
-
-    prevButton.addEventListener('click', () => {
-        if (currentPage > 0) {
-            currentPage--;
-            updateTestimonials();
-        }
-    });
-
-    nextButton.addEventListener('click', () => {
-        if (currentPage < totalPages - 1) {
-            currentPage++;
-            updateTestimonials();
-        }
-    });
-
-    // Handle window resize
-    window.addEventListener('resize', () => {
-        const newCardsPerPage = getCardsPerPage();
-        if (newCardsPerPage !== cardsPerPage) {
-            currentPage = 0;
-            updateTestimonials();
-        }
-    });
-
-    // Initialize the display
-    updateTestimonials();
-});
