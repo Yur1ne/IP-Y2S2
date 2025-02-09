@@ -222,3 +222,67 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 });
+
+// Testimonials Slider
+document.addEventListener('DOMContentLoaded', function() {
+    const container = document.querySelector('.testimonials-container');
+    const track = document.querySelector('.testimonials-track');
+    const cards = document.querySelectorAll('.testimonial-card');
+    const leftBtn = document.querySelector('.scroll-btn.left');
+    const rightBtn = document.querySelector('.scroll-btn.right');
+    
+    let currentIndex = 0;
+    const cardWidth = 374; // card width + gap
+    const maxIndex = cards.length - Math.floor(container.offsetWidth / cardWidth);
+
+    function updateButtons() {
+        leftBtn.disabled = currentIndex <= 0;
+        rightBtn.disabled = currentIndex >= maxIndex;
+    }
+
+    function scrollTo(index) {
+        currentIndex = index;
+        track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+        updateButtons();
+    }
+
+    leftBtn.addEventListener('click', () => {
+        scrollTo(Math.max(0, currentIndex - 1));
+    });
+
+    rightBtn.addEventListener('click', () => {
+        scrollTo(Math.min(maxIndex, currentIndex + 1));
+    });
+
+    // Update buttons on window resize
+    window.addEventListener('resize', () => {
+        maxIndex = cards.length - Math.floor(container.offsetWidth / cardWidth);
+        updateButtons();
+    });
+
+    // Initialize
+    updateButtons();
+
+    // Touch support
+    let startX;
+    let scrollLeft;
+    let isDragging = false;
+
+    track.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].pageX - track.offsetLeft;
+        isDragging = true;
+    });
+
+    track.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.touches[0].pageX - track.offsetLeft;
+        const walk = (x - startX) * 2;
+        const newIndex = currentIndex - Math.sign(walk) * Math.floor(Math.abs(walk) / cardWidth);
+        scrollTo(Math.max(0, Math.min(maxIndex, newIndex)));
+    });
+
+    track.addEventListener('touchend', () => {
+        isDragging = false;
+    });
+});
