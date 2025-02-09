@@ -244,3 +244,9 @@ const Navigation = () => {
 };
 
 export default Navigation;
+
+function scrollTestimonials(direction) {
+    const container = document.querySelector(".testimonials-container ul");
+    const scrollAmount = 370; // Adjust as needed
+    container.scrollBy({ left: direction * scrollAmount, behavior: "smooth" });
+}

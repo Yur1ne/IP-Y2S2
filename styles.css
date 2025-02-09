@@ -626,3 +626,56 @@ footer::before {
         padding: 20px;
     }
 }
+
+.testimonials-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    position: relative;
+}
+
+.scroll-btn {
+    background-color: var(--primary-dark);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.scroll-btn:hover {
+    background-color: var(--secondary-pastel);
+}
+
+.scroll-btn.left {
+    position: absolute;
+    left: -60px;
+}
+
+.scroll-btn.right {
+    position: absolute;
+    right: -60px;
+}
+
+@media screen and (max-width: 768px) {
+    .scroll-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+
+    .scroll-btn.left {
+        left: -40px;
+    }
+
+    .scroll-btn.right {
+        right: -40px;
+    }
+}
