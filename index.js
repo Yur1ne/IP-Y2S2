@@ -118,14 +118,40 @@ document.getElementById("fetch-realtime-btn").addEventListener("click", async ()
 });
 
 // JavaScript to toggle navigation menu
-const hamburger = document.getElementById('hamburger');
-const navLinks = document.getElementById('nav-links');
+// Place after your Firebase initialization and auth functions
+// but before the profile button event listener
+
+// Navigation functionality
+const hamburger = document.querySelector('.hamburger');
+const navLinks = document.querySelector('.nav-links');
 
 hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('hidden');
-    navLinks.classList.toggle('visible');
+    // Toggle hamburger menu animation
+    hamburger.classList.toggle('active');
+    // Toggle navigation menu
+    navLinks.classList.toggle('active');
 });
 
+// Close mobile menu when clicking a link
+document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('active');
+    });
+});
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('active');
+    }
+});
+
+// Your existing profile button event listener can stay at the bottom
+document.querySelector('.profile-button').addEventListener('click', function() {
+    console.log('Profile button clicked!');
+});
 
 document.querySelector('.profile-button').addEventListener('click', function() {
     console.log('Profile button clicked!');
