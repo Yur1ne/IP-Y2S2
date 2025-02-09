@@ -1,14 +1,13 @@
 /* Color Variables */
 :root {
-    --primary-pastel: #FFB347;       /* Soft orange */
-    --primary-dark: #D35400;         /* Deep orange */
-    --secondary-pastel: #FFA07A;     /* Light salmon */
-    --accent-pastel: #FFD700;        /* Gold */
-    --background-light: #FFF5E1;     /* Light peach */
-    --text-primary: #D35400;         /* Deep orange */
-    --text-secondary: #8B4513;       /* Saddle brown */
+    --primary-pastel: #F4A261;       /* Muted pastel orange */
+    --primary-dark: #E76F51;         /* Soft coral */
+    --secondary-pastel: #F4C095;     /* Warm pastel peach */
+    --accent-pastel: #FFD9A0;        /* Soft goldenrod */
+    --background-light: #FFF8E7;     /* Gentle cream */
+    --text-primary: #E76F51;         /* Soft coral */
+    --text-secondary: #B56576;       /* Muted mauve */
 }
-
 
 /* General Styles */
 body {
