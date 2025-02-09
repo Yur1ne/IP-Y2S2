@@ -1,12 +1,12 @@
-/* Color Variables */
+/* Updated Pastel Color Variables */
 :root {
-    --primary-pastel: #F4A261;       /* Muted pastel orange */
-    --primary-dark: #E76F51;         /* Soft coral */
-    --secondary-pastel: #F4C095;     /* Warm pastel peach */
-    --accent-pastel: #FFD9A0;        /* Soft goldenrod */
-    --background-light: #ffffff;     /* white */
-    --text-primary: #E76F51;         /* Soft coral */
-    --text-secondary: #B56576;       /* Muted mauve */
+    --primary-pastel: #FFB6C1;       /* Light pink (soft and warm) */
+    --primary-dark: #FF8C94;         /* Muted coral (slightly deeper for contrast) */
+    --secondary-pastel: #B2E2F2;     /* Soft pastel blue (cool and calming) */
+    --accent-pastel: #FFDAC1;        /* Light peach (warm and inviting) */
+    --background-light: #FFF9F0;     /* Warm white with a subtle pastel tint */
+    --text-primary: #6A5ACD;         /* Soft pastel lavender (for primary text) */
+    --text-secondary: #A8D8B9;       /* Muted pastel mint (for secondary text) */
 }
 
 /* General Styles */
