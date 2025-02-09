@@ -121,6 +121,9 @@ document.getElementById("fetch-realtime-btn").addEventListener("click", async ()
 // Place after your Firebase initialization and auth functions
 // but before the profile button event listener
 
+// Navigation functionality
+const hamburger = document.querySelector('.hamburger');
+const navLinks = document.querySelector('.nav-links');
 
 hamburger.addEventListener('click', () => {
     // Toggle hamburger menu animation
@@ -222,6 +225,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 });
+
 
 // Testimonials Navigation
 document.addEventListener('DOMContentLoaded', function() {
