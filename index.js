@@ -121,9 +121,6 @@ document.getElementById("fetch-realtime-btn").addEventListener("click", async ()
 // Place after your Firebase initialization and auth functions
 // but before the profile button event listener
 
-// Navigation functionality
-const hamburger = document.querySelector('.hamburger');
-const navLinks = document.querySelector('.nav-links');
 
 hamburger.addEventListener('click', () => {
     // Toggle hamburger menu animation
@@ -180,3 +177,48 @@ function scrollTestimonials(direction) {
     container.scrollBy({ left: direction * scrollAmount, behavior: "smooth" });
 }
 
+// Navigation functionality
+const hamburger = document.querySelector('.hamburger');
+const navLinks = document.querySelector('.nav-links');
+const navItems = document.querySelectorAll('.nav-links a');
+
+// Toggle hamburger menu
+hamburger.addEventListener('click', () => {
+    // Toggle hamburger animation
+    hamburger.classList.toggle('active');
+    // Toggle navigation menu
+    navLinks.classList.toggle('active');
+});
+
+// Close mobile menu when clicking a link
+navItems.forEach(item => {
+    item.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('active');
+    });
+});
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('active');
+    }
+});
+
+// Add smooth scrolling to nav links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+            targetElement.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
