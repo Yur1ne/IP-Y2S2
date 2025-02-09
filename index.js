@@ -163,4 +163,10 @@ function scrollTestimonials(direction) {
     container.scrollBy({ left: direction * scrollAmount, behavior: "smooth" });
 }
 
-
+// Add this to your existing JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+    const elements = document.querySelectorAll('section, .game-card');
+    elements.forEach(element => {
+        element.classList.add('fade-in');
+    });
+});
