@@ -6,11 +6,12 @@
     <title>Number Quest - Login</title>
     <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js"></script>
-
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Sans+MS:wght@700&display=swap');
+        
         body {
-            font-family: 'Arial', sans-serif;
-            background-image: url('https://images5.alphacoders.com/380/380057.jpg');
+            font-family: 'Comic Sans MS', cursive;
+            background-image: url('https://images.pexels.com/photos/207666/pexels-photo-207666.jpeg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -20,146 +21,103 @@
             align-items: center;
             height: 100vh;
         }
-
+        
         .auth-container {
-            background-color: rgba(255, 255, 255, 0.85);
-            padding: 40px;
-            border-radius: 12px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 20px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            width: 400px;
+            width: 350px;
             text-align: center;
-            position: relative;
+            border: 4px solid #FFD700;
         }
-
+        
         .auth-container h1 {
             font-size: 2.5em;
             margin-bottom: 10px;
-            color: #333;
+            color: #ff6600;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
-
+        
         .auth-container p {
             font-size: 1em;
-            margin-bottom: 30px;
-            color: #555;
+            margin-bottom: 20px;
+            color: #333;
         }
-
+        
         .auth-container input {
             width: 100%;
             padding: 12px;
             margin: 10px 0;
-            border: 1px solid #ccc;
+            border: 2px solid #FFD700;
             border-radius: 8px;
             box-sizing: border-box;
             font-size: 1em;
             outline: none;
             transition: border-color 0.3s ease;
         }
-
+        
         .auth-container input:focus {
-            border-color: #007bff;
+            border-color: #ff6600;
         }
-
+        
         .auth-container button {
             width: 100%;
             padding: 14px;
-            margin: 15px 0;
+            margin: 10px 0;
             border: none;
-            border-radius: 8px;
-            background-color: #007bff;
+            border-radius: 12px;
+            background-color: #ff6600;
             color: white;
             font-size: 1.1em;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease;
         }
-
+        
         .auth-container button:hover {
-            background-color: #0056b3;
-            transform: scale(1.02);
+            background-color: #e65c00;
+            transform: scale(1.05);
         }
-
+        
         .secondary-btn {
-            background-color: #28a745;
+            background-color: #32CD32;
         }
-
+        
         .secondary-btn:hover {
-            background-color: #218838;
+            background-color: #2a9d2a;
         }
 
         #reset-password-btn {
-            background-color: #ed4a4a;
-            color: black;
+            background-color: #FF4500;
         }
 
         #reset-password-btn:hover {
-            background-color: #ed8181;
+            background-color: #d33b00;
         }
-
-        #sign-out-btn {
-            background-color: #f63145;
-        }
-
-        #sign-out-btn:hover {
-            background-color: #c82333;
-        }
-
+        
         #error-message {
             display: none;
             padding: 10px;
-            margin-top: 20px;
+            margin-top: 10px;
             font-size: 0.9em;
             border-radius: 5px;
             background-color: #f8d7da;
             color: #721c24;
             border: 1px solid #f5c6cb;
         }
-
-        .divider {
-            margin: 20px 0;
-            font-size: 0.9em;
-            color: #aaa;
-            text-align: center;
-            position: relative;
-        }
-
-        .divider:before,
-        .divider:after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            width: 40%;
-            height: 1px;
-            background: #ccc;
-        }
-
-        .divider:before {
-            left: 0;
-        }
-
-        .divider:after {
-            right: 0;
-        }
-        
     </style>
 </head>
 <body>
     <div class="auth-container">
-        <h1>Number Quest</h1>
-        <p>Log in to access your VR Learning experience.</p>
-
-        <div id="auth-section">
-            <input type="email" id="email" placeholder="Email" />
-            <input type="password" id="password" placeholder="Password" />
-            <button id="sign-in-btn">Sign In</button>
-            <button id="sign-out-btn" style="display: none;">Sign Out</button>
-
-            <div class="divider">or</div>
-
-            <button class="secondary-btn" id="signup-btn">Sign Up</button>
-            <button id="reset-password-btn">Forgot Password?</button>
-
-            <div id="user-info"></div>
-            <div id="error-message"></div>
-        </div>
+        <h1>🎲 Number Quest 🎲</h1>
+        <p>Log in to start your math adventure!</p>
+        <input type="email" id="email" placeholder="Enter your email" />
+        <input type="password" id="password" placeholder="Enter your password" />
+        <button id="sign-in-btn">Start Quest</button>
+        <button class="secondary-btn" id="signup-btn">Join the Adventure</button>
+        <button id="reset-password-btn">Forgot Password?</button>
+        <div id="error-message"></div>
+    </div>
     </div>
 
     <script type="module">
