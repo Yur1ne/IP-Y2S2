@@ -251,10 +251,3 @@ function scrollTestimonials(direction) {
     container.scrollBy({ left: direction * scrollAmount, behavior: "smooth" });
 }
 
-import { createRoot } from 'react-dom/client';
-import Navigation from './Navigation';
-
-const navigationRoot = document.getElementById('navigation-root');
-if (navigationRoot) {
-  createRoot(navigationRoot).render(<Navigation />);
-}
