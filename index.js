@@ -223,66 +223,64 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Testimonials Slider
+// Testimonials Navigation
 document.addEventListener('DOMContentLoaded', function() {
-    const container = document.querySelector('.testimonials-container');
-    const track = document.querySelector('.testimonials-track');
-    const cards = document.querySelectorAll('.testimonial-card');
-    const leftBtn = document.querySelector('.scroll-btn.left');
-    const rightBtn = document.querySelector('.scroll-btn.right');
+    const testimonialCards = document.querySelectorAll('.testimonial-card');
+    const prevButton = document.querySelector('.prev-page');
+    const nextButton = document.querySelector('.next-page');
     
-    let currentIndex = 0;
-    const cardWidth = 374; // card width + gap
-    const maxIndex = cards.length - Math.floor(container.offsetWidth / cardWidth);
+    const cardsPerPage = getCardsPerPage();
+    let currentPage = 0;
+    const totalPages = Math.ceil(testimonialCards.length / cardsPerPage);
 
-    function updateButtons() {
-        leftBtn.disabled = currentIndex <= 0;
-        rightBtn.disabled = currentIndex >= maxIndex;
+    function getCardsPerPage() {
+        if (window.innerWidth > 1024) return 3;
+        if (window.innerWidth > 768) return 2;
+        return 1;
     }
 
-    function scrollTo(index) {
-        currentIndex = index;
-        track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
-        updateButtons();
+    function updateTestimonials() {
+        // Hide all cards
+        testimonialCards.forEach(card => {
+            card.classList.remove('active');
+        });
+
+        // Show cards for current page
+        const startIndex = currentPage * cardsPerPage;
+        const endIndex = Math.min(startIndex + cardsPerPage, testimonialCards.length);
+        
+        for (let i = startIndex; i < endIndex; i++) {
+            testimonialCards[i].classList.add('active');
+        }
+
+        // Update button states
+        prevButton.disabled = currentPage === 0;
+        nextButton.disabled = currentPage >= totalPages - 1;
     }
 
-    leftBtn.addEventListener('click', () => {
-        scrollTo(Math.max(0, currentIndex - 1));
+    prevButton.addEventListener('click', () => {
+        if (currentPage > 0) {
+            currentPage--;
+            updateTestimonials();
+        }
     });
 
-    rightBtn.addEventListener('click', () => {
-        scrollTo(Math.min(maxIndex, currentIndex + 1));
+    nextButton.addEventListener('click', () => {
+        if (currentPage < totalPages - 1) {
+            currentPage++;
+            updateTestimonials();
+        }
     });
 
-    // Update buttons on window resize
+    // Handle window resize
     window.addEventListener('resize', () => {
-        maxIndex = cards.length - Math.floor(container.offsetWidth / cardWidth);
-        updateButtons();
+        const newCardsPerPage = getCardsPerPage();
+        if (newCardsPerPage !== cardsPerPage) {
+            currentPage = 0;
+            updateTestimonials();
+        }
     });
 
-    // Initialize
-    updateButtons();
-
-    // Touch support
-    let startX;
-    let scrollLeft;
-    let isDragging = false;
-
-    track.addEventListener('touchstart', (e) => {
-        startX = e.touches[0].pageX - track.offsetLeft;
-        isDragging = true;
-    });
-
-    track.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
-        e.preventDefault();
-        const x = e.touches[0].pageX - track.offsetLeft;
-        const walk = (x - startX) * 2;
-        const newIndex = currentIndex - Math.sign(walk) * Math.floor(Math.abs(walk) / cardWidth);
-        scrollTo(Math.max(0, Math.min(maxIndex, newIndex)));
-    });
-
-    track.addEventListener('touchend', () => {
-        isDragging = false;
-    });
+    // Initialize the display
+    updateTestimonials();
 });
