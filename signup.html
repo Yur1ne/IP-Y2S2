@@ -4,123 +4,203 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Number Quest - Sign Up</title>
-    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js"></script>
-
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-image: url('https://images5.alphacoders.com/380/380057.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            height: 100vh;
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap');
+
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #FF9B9B, #FFD4B2, #C7E9B0);
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 20px;
         }
 
         .auth-container {
-            background-color: rgba(255, 255, 255, 0.85);
+            background-color: rgba(255, 255, 255, 0.95);
             padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            width: 400px;
+            border-radius: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 480px;
             text-align: center;
             position: relative;
-            transition: transform 0.3s ease;
+            overflow: hidden;
         }
 
-        .auth-container h1 {
-            margin-bottom: 20px;
-            color: #333;
-            font-size: 2.5em;
+        .auth-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, #FF6B6B, #4ECDC4, #45B7D1);
+        }
+
+        .game-logo {
+            width: 120px;
+            height: 120px;
+            background: #FFD93D;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
             font-weight: bold;
-        }
-
-        .auth-container input[type="text"],
-        .auth-container input[type="email"],
-        .auth-container input[type="password"] {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-            font-size: 1.1em;
-            transition: border-color 0.3s ease;
-        }
-
-        .auth-container input[type="text"]:focus,
-        .auth-container input[type="email"]:focus,
-        .auth-container input[type="password"]:focus {
-            border-color: #007bff;
-            outline: none;
-        }
-
-        .auth-container button {
-            width: 100%;
-            padding: 15px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 5px;
-            background-color: #007bff;
             color: white;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            animation: bounce 2s infinite;
         }
 
-        .auth-container button:hover {
-            background-color: #0056b3;
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 {
+            color: #2C3E50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        h3 {
+            color: #666;
+            margin-bottom: 25px;
+            font-weight: 400;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #E0E0E0;
+            border-radius: 12px;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            background: #F8F9FA;
+        }
+
+        .input-group input:focus {
+            border-color: #4ECDC4;
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(78, 205, 196, 0.1);
+        }
+
+        .input-group input::placeholder {
+            color: #AAA;
+        }
+
+        button {
+            background: linear-gradient(45deg, #4ECDC4, #45B7D1);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            width: 100%;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(69, 183, 209, 0.3);
         }
 
         #error-message {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-            padding: 10px;
+            background-color: #FFE5E5;
+            color: #FF6B6B;
+            border-radius: 12px;
+            padding: 15px;
             margin-top: 20px;
-            border-radius: 5px;
             font-size: 0.9em;
             display: none;
         }
 
-        .auth-container .footer-text {
-            margin-top: 20px;
-            font-size: 0.9em;
-            color: #555;
+        .footer-text {
+            margin-top: 25px;
+            color: #666;
+            font-size: 1em;
         }
 
-        .auth-container .footer-text a {
-            color: #007bff;
+        .footer-text a {
+            color: #4ECDC4;
             text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
         }
 
-        .auth-container .footer-text a:hover {
-            text-decoration: underline;
+        .footer-text a:hover {
+            color: #45B7D1;
         }
 
+        .math-symbols {
+            position: absolute;
+            font-size: 24px;
+            color: rgba(0, 0, 0, 0.1);
+            z-index: 0;
+            animation: float 3s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        .symbol-1 { top: 20px; left: 20px; }
+        .symbol-2 { top: 60px; right: 30px; }
+        .symbol-3 { bottom: 40px; left: 40px; }
+        .symbol-4 { bottom: 30px; right: 40px; }
     </style>
 </head>
 <body>
     <div class="auth-container">
-        <h1>Number Quest</h1>
+        <div class="game-logo">123</div>
+        <div class="math-symbols symbol-1">+</div>
+        <div class="math-symbols symbol-2">×</div>
+        <div class="math-symbols symbol-3">÷</div>
+        <div class="math-symbols symbol-4">−</div>
 
-        <!-- Sign Up Form -->
-        <h3>Create Account</h3>
-        <input type="text" id="username" placeholder="Username" required />
-        <input type="email" id="email" placeholder="Email" required />
-        <input type="password" id="password" placeholder="Password" required />
-        <input type="password" id="confirm-password" placeholder="Confirm Password" required />
-        <button id="sign-up-btn">Sign Up</button>
+        <h1>Number Quest</h1>
+        <h3>Join the Math Adventure!</h3>
+
+        <div class="input-group">
+            <input type="text" id="username" placeholder="Pick a Cool Username" required />
+        </div>
+        <div class="input-group">
+            <input type="email" id="email" placeholder="Parent's Email" required />
+        </div>
+        <div class="input-group">
+            <input type="password" id="password" placeholder="Create a Secret Password" required />
+        </div>
+        <div class="input-group">
+            <input type="password" id="confirm-password" placeholder="Confirm Your Secret Password" required />
+        </div>
+
+        <button id="sign-up-btn">Start Your Adventure!</button>
 
         <div id="error-message"></div>
 
         <div class="footer-text">
-            <p>Already have an account? <a href="signin.html">Log In</a></p>
+            <p>Already a Number Quest hero? <a href="signin.html">Log In Here!</a></p>
         </div>
     </div>
 
@@ -143,46 +223,40 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // Show error message
         function showError(message) {
             const errorMessage = document.getElementById("error-message");
             errorMessage.textContent = message;
             errorMessage.style.display = 'block';
         }
 
-        // Clear error message
         function clearError() {
             const errorMessage = document.getElementById("error-message");
             errorMessage.style.display = 'none';
         }
 
-        // Sign Up Function
         document.getElementById("sign-up-btn").addEventListener("click", async () => {
-            clearError(); // Clear any previous errors
+            clearError();
 
             const username = document.getElementById("username").value;
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
             const confirmPassword = document.getElementById("confirm-password").value;
 
-            // Check if password and confirm password match
             if (password !== confirmPassword) {
-                showError("Passwords do not match.");
+                showError("Oops! Your passwords don't match. Try again!");
                 return;
             }
 
             try {
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                // Store the username in Firebase Firestore or Realtime Database (optional)
-                // For now, just displaying a success message
-                alert(`Account created for ${username}`);
-                window.location.href = "index.html"; // Redirect to dashboard after successful sign-up
+                alert(`Welcome to Number Quest, ${username}!`);
+                window.location.href = "index.html";
             } catch (error) {
                 console.error("Error signing up:", error);
                 if (error.code === 'auth/invalid-email') {
                     showError("Please enter a valid email address.");
                 } else {
-                    showError("An error occurred while creating the account. Please try again.");
+                    showError("Oops! Something went wrong. Let's try that again!");
                 }
             }
         });
