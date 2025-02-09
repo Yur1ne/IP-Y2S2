@@ -9,14 +9,18 @@
     --text-secondary: #525685;       /* Muted navy */
 }
 
+
 /* General Styles */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Comic Sans MS', cursive;
+    background-color: var(--background-color);
+    color: var(--text-color);
     margin: 0;
     padding: 0;
-    background-color: var(--background-light);
-    color: var(--text-primary);
-    scroll-behavior: smooth;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 /* General Reset */
