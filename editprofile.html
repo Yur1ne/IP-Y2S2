@@ -152,28 +152,39 @@
 
         // Update username
         document.getElementById("update-btn").addEventListener("click", async () => {
-            const username = document.getElementById("username").value;
-            const errorMessage = document.getElementById("error-message");
-            const successMessage = document.getElementById("success-message");
+        const username = document.getElementById("username").value;
+        const errorMessage = document.getElementById("error-message");
+        const successMessage = document.getElementById("success-message");
 
-            errorMessage.textContent = ''; // Clear previous error messages
-            successMessage.textContent = ''; // Clear previous success messages
+        errorMessage.textContent = ''; // Clear previous error messages
+        successMessage.textContent = ''; // Clear previous success messages
 
-            if (!username.trim()) {
-                errorMessage.textContent = 'Please enter a valid username.';
-                return;
-            }
+        if (!username.trim()) {
+            errorMessage.textContent = 'Please enter a valid username.';
+            return;
+        }
 
-            const user = auth.currentUser;
-            try {
-                await updateProfile(user, {
-                    displayName: username
-                });
-                successMessage.textContent = 'Username updated successfully!';
-            } catch (error) {
-                errorMessage.textContent = 'Error updating username: ' + error.message;
-            }
-        });
+        const user = auth.currentUser;
+        try {
+            await updateProfile(user, {
+                displayName: username
+            });
+
+            // Store updated username in localStorage
+            localStorage.setItem("username", username);
+
+            successMessage.textContent = 'Username updated successfully!';
+            
+            // Redirect to index.html after update
+            setTimeout(() => {
+                window.location.href = "index.html"; 
+            }, 1000); 
+
+        } catch (error) {
+            errorMessage.textContent = 'Error updating username: ' + error.message;
+        }
+    });
+
     </script>
 </body>
 </html>
