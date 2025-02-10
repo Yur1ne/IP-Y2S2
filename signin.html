@@ -165,7 +165,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+        import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAPqBbtP-KqLLVt0NcuVIKBDDz7jJa6Bak",
@@ -208,9 +208,25 @@
             }
         });
 
-        // Fix: Redirect "Join the Adventure" button to signup.html
         document.getElementById("signup-btn").addEventListener("click", () => {
             window.location.href = "signup.html";
+        });
+
+        document.getElementById("reset-password-btn").addEventListener("click", async () => {
+            clearError();
+            const email = document.getElementById("email").value;
+
+            if (!email) {
+                showError("Please enter your email to reset your password.");
+                return;
+            }
+
+            try {
+                await sendPasswordResetEmail(auth, email);
+                alert("Password reset email sent! Check your inbox.");
+            } catch (error) {
+                showError("Error sending reset email. Please try again.");
+            }
         });
     </script>
 </body>
