@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(to right, #6a11cb, #2575fc); /* Gradient background */
+            background: linear-gradient(to right, #FFB88C, #FF6F61);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -17,7 +17,7 @@
         }
     
         .container {
-            background-color: white;
+            background-color: #FFF4E0;
             padding: 40px 30px;
             border-radius: 15px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
@@ -28,14 +28,14 @@
     
         h1 {
             font-size: 2.5em;
-            color: #333;
+            color: #D35400;
             margin-bottom: 20px;
             text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
         }
     
         label {
             font-size: 1.1em;
-            color: #555;
+            color: #8B4513;
             margin-bottom: 10px;
             display: block;
             text-align: left;
@@ -46,23 +46,23 @@
             width: 90%;
             padding: 12px 15px;
             margin-bottom: 20px;
-            border: 1px solid #ddd;
+            border: 1px solid #F4A460;
             border-radius: 8px;
             font-size: 1em;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: #FFF5E1;
             transition: border 0.3s ease, box-shadow 0.3s ease;
         }
     
         input:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            border-color: #FF6F61;
+            box-shadow: 0 0 5px rgba(255, 111, 97, 0.5);
             outline: none;
         }
     
         button {
             width: 100%;
             padding: 12px 20px;
-            background: linear-gradient(90deg, #007bff, #0056b3);
+            background: linear-gradient(90deg, #FF6F61, #D35400);
             color: white;
             border: none;
             border-radius: 8px;
@@ -70,6 +70,7 @@
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
         }
     
         button:hover {
@@ -120,6 +121,7 @@
         <label for="username">New Username</label>
         <input type="text" id="username" placeholder="Enter new username" />
         <button id="update-btn">Update Username</button>
+        <button id="profile-btn" onclick="window.location.href='profile.html';">Go to Profile</button>
         <p id="error-message" class="error"></p>
         <p id="success-message" class="success"></p>
     </div>
@@ -129,7 +131,6 @@
         import { getAuth, updateProfile, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
         import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
     
-        // Firebase config
         const firebaseConfig = {
             apiKey: "AIzaSyAPqBbtP-KqLLVt0NcuVIKBDDz7jJa6Bak",
             authDomain: "ip-y2s2.firebaseapp.com",
@@ -140,26 +141,23 @@
             appId: "1:191631267863:web:ada36be630772321afe452"
         };
     
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth();
         const db = getDatabase(app);
     
-        // Listen for auth state change to ensure user is logged in
         onAuthStateChanged(auth, (user) => {
             if (!user) {
-                window.location.href = "signin.html"; // Redirect to login if not signed in
+                window.location.href = "signin.html";
             }
         });
     
-        // Update username
         document.getElementById("update-btn").addEventListener("click", async () => {
             const username = document.getElementById("username").value.trim();
             const errorMessage = document.getElementById("error-message");
             const successMessage = document.getElementById("success-message");
     
-            errorMessage.textContent = ''; // Clear previous errors
-            successMessage.textContent = ''; // Clear previous success messages
+            errorMessage.textContent = '';
+            successMessage.textContent = '';
     
             if (!username) {
                 errorMessage.textContent = 'Please enter a valid username.';
@@ -168,18 +166,10 @@
     
             const user = auth.currentUser;
             try {
-                // Update Firebase Authentication profile
                 await updateProfile(user, { displayName: username });
-    
-                // Update Firebase Realtime Database
                 await set(ref(db, `users/${user.uid}/username`), username);
-    
-                // Save to localStorage (optional)
                 localStorage.setItem("username", username);
-    
                 successMessage.textContent = 'Username updated successfully!';
-                
-                // Redirect back to index.html after update
                 setTimeout(() => {
                     window.location.href = "index.html";
                 }, 2000);
@@ -188,6 +178,5 @@
             }
         });
     </script>
-    
 </body>
 </html>
