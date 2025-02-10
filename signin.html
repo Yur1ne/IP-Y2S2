@@ -164,44 +164,54 @@
     </div>
 
     <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-        import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
 
-        const firebaseConfig = { /* Your Firebase Config Here */ };
+        const firebaseConfig = {
+            apiKey: "AIzaSyAPqBbtP-KqLLVt0NcuVIKBDDz7jJa6Bak",
+            authDomain: "ip-y2s2.firebaseapp.com",
+            databaseURL: "https://ip-y2s2-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "ip-y2s2",
+            storageBucket: "ip-y2s2.firebasestorage.app",
+            messagingSenderId: "191631267863",
+            appId: "1:191631267863:web:ada36be630772321afe452"
+        };
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-        const db = getDatabase(app);
+
+        function showError(message) {
+            const errorMessage = document.getElementById("error-message");
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+        }
+
+        function clearError() {
+            document.getElementById("error-message").style.display = 'none';
+        }
 
         document.getElementById("sign-in-btn").addEventListener("click", async () => {
+            clearError();
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
-
+            
             if (!email || !password) {
-                alert("Please enter both email and password!");
+                showError("Please enter both email and password.");
                 return;
             }
 
             try {
-                const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                const user = userCredential.user;
-
-                // Fetch username from Firebase
-                const userRef = ref(db, 'users/' + user.uid);
-                const snapshot = await get(userRef);
-
-                if (snapshot.exists()) {
-                    const userData = snapshot.val();
-                    localStorage.setItem("username", userData.username); // Store username in localStorage
-                }
-
-                window.location.href = "profile.html"; // Redirect to profile
+                await signInWithEmailAndPassword(auth, email, password);
+                window.location.href = "index.html"; // Redirect on success
             } catch (error) {
-                alert("Login failed: " + error.message);
+                showError("Sign in failed. Please try again.");
             }
         });
 
+        // Fix: Redirect "Join the Adventure" button to signup.html
+        document.getElementById("signup-btn").addEventListener("click", () => {
+            window.location.href = "signup.html";
+        });
     </script>
 </body>
 </html>
