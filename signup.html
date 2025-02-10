@@ -209,6 +209,11 @@
 
     <script type="module">
         // Firebase Configuration
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+
+        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyAPqBbtP-KqLLVt0NcuVIKBDDz7jJa6Bak",
             authDomain: "ip-y2s2.firebaseapp.com",
@@ -219,50 +224,37 @@
             appId: "1:191631267863:web:ada36be630772321afe452"
         };
 
-        // Initialize Firebase
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const db = getDatabase(app);
 
-        function showError(message) {
-            const errorMessage = document.getElementById("error-message");
-            errorMessage.textContent = message;
-            errorMessage.style.display = 'block';
-        }
-
-        function clearError() {
-            const errorMessage = document.getElementById("error-message");
-            errorMessage.style.display = 'none';
-        }
-
-        document.getElementById("sign-up-btn").addEventListener("click", async () => {
-            clearError();
-
+        document.getElementById("signup-btn").addEventListener("click", async () => {
             const username = document.getElementById("username").value;
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
-            const confirmPassword = document.getElementById("confirm-password").value;
 
-            if (password !== confirmPassword) {
-                showError("Oops! Your passwords don't match. Try again!");
+            if (!username || !email || !password) {
+                alert("Please fill in all fields!");
                 return;
             }
 
             try {
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                alert(`Welcome to Number Quest, ${username}!`);
-                window.location.href = "index.html";
+                const user = userCredential.user;
+
+                // Save username to Firebase database
+                await set(ref(db, 'users/' + user.uid), { 
+                    username: username,
+                    email: email
+                });
+
+                alert("Signup successful! Redirecting...");
+                window.location.href = "profile.html"; // Redirect to profile
             } catch (error) {
-                console.error("Error signing up:", error);
-                if (error.code === 'auth/invalid-email') {
-                    showError("Please enter a valid email address.");
-                } else {
-                    showError("Oops! Something went wrong. Let's try that again!");
-                }
+                alert("Error: " + error.message);
             }
         });
+
     </script>
 </body>
 </html>
