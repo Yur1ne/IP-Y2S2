@@ -147,6 +147,10 @@
                 console.error('Error signing out:', error);
             }
         });
+
+        document.getElementById("edit-profile-btn").addEventListener("click", () => {
+            window.location.href = "editprofile.html";  // Redirect to the settings page
+        });
     </script>
 </body>
 </html>
