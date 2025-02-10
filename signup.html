@@ -6,6 +6,7 @@
     <title>Number Quest - Sign Up</title>
     <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap');
 
@@ -208,7 +209,12 @@
     </div>
 
     <script type="module">
-        // Firebase Configuration
+        // Import Firebase modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+
+        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyAPqBbtP-KqLLVt0NcuVIKBDDz7jJa6Bak",
             authDomain: "ip-y2s2.firebaseapp.com",
@@ -220,11 +226,9 @@
         };
 
         // Initialize Firebase
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const db = getDatabase(app);
 
         function showError(message) {
             const errorMessage = document.getElementById("error-message");
@@ -233,17 +237,21 @@
         }
 
         function clearError() {
-            const errorMessage = document.getElementById("error-message");
-            errorMessage.style.display = 'none';
+            document.getElementById("error-message").style.display = 'none';
         }
 
         document.getElementById("sign-up-btn").addEventListener("click", async () => {
             clearError();
 
-            const username = document.getElementById("username").value;
-            const email = document.getElementById("email").value;
+            const username = document.getElementById("username").value.trim();
+            const email = document.getElementById("email").value.trim();
             const password = document.getElementById("password").value;
             const confirmPassword = document.getElementById("confirm-password").value;
+
+            if (!username || !email || !password || !confirmPassword) {
+                showError("Please fill in all fields.");
+                return;
+            }
 
             if (password !== confirmPassword) {
                 showError("Oops! Your passwords don't match. Try again!");
@@ -252,17 +260,36 @@
 
             try {
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                // Save username in Firebase Authentication
+                await updateProfile(user, { displayName: username });
+
+                // Save user data in Firebase Realtime Database
+                await set(ref(db, `users/${user.uid}`), {
+                    username: username,
+                    email: email,
+                    createdAt: new Date().toISOString(),
+                    highScore: 0, // Default values
+                    levelsCompleted: 0
+                });
+
                 alert(`Welcome to Number Quest, ${username}!`);
-                window.location.href = "index.html";
+                window.location.href = "index.html"; // Redirect to main page
             } catch (error) {
                 console.error("Error signing up:", error);
-                if (error.code === 'auth/invalid-email') {
+                if (error.code === 'auth/email-already-in-use') {
+                    showError("This email is already in use. Try another.");
+                } else if (error.code === 'auth/invalid-email') {
                     showError("Please enter a valid email address.");
+                } else if (error.code === 'auth/weak-password') {
+                    showError("Password must be at least 6 characters.");
                 } else {
-                    showError("Oops! Something went wrong. Let's try that again!");
+                    showError("Oops! Something went wrong. Try again.");
                 }
             }
         });
     </script>
 </body>
 </html>
+
