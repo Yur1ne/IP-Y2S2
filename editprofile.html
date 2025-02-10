@@ -127,8 +127,9 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
         import { getAuth, updateProfile, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-
-        // Your Firebase config
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+    
+        // Firebase config
         const firebaseConfig = {
             apiKey: "AIzaSyAPqBbtP-KqLLVt0NcuVIKBDDz7jJa6Bak",
             authDomain: "ip-y2s2.firebaseapp.com",
@@ -138,53 +139,55 @@
             messagingSenderId: "191631267863",
             appId: "1:191631267863:web:ada36be630772321afe452"
         };
-
+    
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth();
-
-        // Listen for auth state change to ensure the user is logged in
+        const db = getDatabase(app);
+    
+        // Listen for auth state change to ensure user is logged in
         onAuthStateChanged(auth, (user) => {
             if (!user) {
-                window.location.href = "index.html";  // Redirect to login if not signed in
+                window.location.href = "signin.html"; // Redirect to login if not signed in
             }
         });
-
+    
         // Update username
         document.getElementById("update-btn").addEventListener("click", async () => {
-        const username = document.getElementById("username").value;
-        const errorMessage = document.getElementById("error-message");
-        const successMessage = document.getElementById("success-message");
-
-        errorMessage.textContent = ''; // Clear previous error messages
-        successMessage.textContent = ''; // Clear previous success messages
-
-        if (!username.trim()) {
-            errorMessage.textContent = 'Please enter a valid username.';
-            return;
-        }
-
-        const user = auth.currentUser;
-        try {
-            await updateProfile(user, {
-                displayName: username
-            });
-
-            // Store updated username in localStorage
-            localStorage.setItem("username", username);
-
-            successMessage.textContent = 'Username updated successfully!';
-            
-            // Redirect to index.html after update
-            setTimeout(() => {
-                window.location.href = "index.html"; 
-            }, 1000); 
-
-        } catch (error) {
-            errorMessage.textContent = 'Error updating username: ' + error.message;
-        }
-    });
-
+            const username = document.getElementById("username").value.trim();
+            const errorMessage = document.getElementById("error-message");
+            const successMessage = document.getElementById("success-message");
+    
+            errorMessage.textContent = ''; // Clear previous errors
+            successMessage.textContent = ''; // Clear previous success messages
+    
+            if (!username) {
+                errorMessage.textContent = 'Please enter a valid username.';
+                return;
+            }
+    
+            const user = auth.currentUser;
+            try {
+                // Update Firebase Authentication profile
+                await updateProfile(user, { displayName: username });
+    
+                // Update Firebase Realtime Database
+                await set(ref(db, `users/${user.uid}/username`), username);
+    
+                // Save to localStorage (optional)
+                localStorage.setItem("username", username);
+    
+                successMessage.textContent = 'Username updated successfully!';
+                
+                // Redirect back to index.html after update
+                setTimeout(() => {
+                    window.location.href = "index.html";
+                }, 2000);
+            } catch (error) {
+                errorMessage.textContent = 'Error updating username: ' + error.message;
+            }
+        });
     </script>
+    
 </body>
 </html>
