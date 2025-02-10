@@ -1,12 +1,14 @@
-<!-- profile.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile - Number Quest</title>
-    <link rel="stylesheet" href="profile.css"> <!-- Link to the main stylesheet -->
+    <link rel="stylesheet" href="profile.css">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <!-- Add Firebase SDK -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js"></script>
 </head>
 <body>
     <!-- Navigation Bar -->
@@ -71,9 +73,39 @@
             <!-- Profile Actions -->
             <div class="profile-actions">
                 <button class="edit-btn">Edit Profile</button>
-                <button class="logout-btn">Logout</button>
+                <button class="logout-btn" id="logout-btn">Logout</button>
             </div>
         </div>
     </section>
+
+    <script type="module">
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAPqBbtP-KqLLVt0NcuVIKBDDz7jJa6Bak",
+            authDomain: "ip-y2s2.firebaseapp.com",
+            databaseURL: "https://ip-y2s2-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "ip-y2s2",
+            storageBucket: "ip-y2s2.firebasestorage.app",
+            messagingSenderId: "191631267863",
+            appId: "1:191631267863:web:ada36be630772321afe452"
+        };
+
+        // Initialize Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+        import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Logout functionality
+        document.getElementById('logout-btn').addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+                window.location.href = 'signin.html'; // Redirect to signin page
+            } catch (error) {
+                console.error('Error signing out:', error);
+            }
+        });
+    </script>
 </body>
 </html>
