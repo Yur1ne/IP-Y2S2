@@ -246,6 +246,30 @@ nav ul li a:hover {
     border-color: #ff6b3d;
 }
 
+    /* Upload Profile Picture Button */
+    .upload-btn {
+        background: #ff7f50; /* Match other buttons */
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .upload-btn:hover {
+        background: #ff6b3d;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 127, 80, 0.2);
+    }
+
 /* Responsive Design */
 @media (max-width: 768px) {
     #profile {
@@ -270,4 +294,50 @@ nav ul li a:hover {
         width: 100%;
         justify-content: center;
     }
+
+        /* Upload Profile Picture Button - Styled like Other Buttons */
+    .upload-btn {
+        background: var(--primary-dark); /* Same color as other buttons */
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .upload-btn:hover {
+        background: var(--primary-pastel); /* Slight color shift on hover */
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Ensure buttons are spaced evenly */
+    .profile-actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .profile-actions {
+            flex-direction: column;
+        }
+
+        .edit-btn, .logout-btn, .upload-btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+
+    
 }
