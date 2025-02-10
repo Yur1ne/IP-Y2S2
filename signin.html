@@ -215,34 +215,38 @@
         }
 
         document.getElementById("sign-in-btn").addEventListener("click", async () => {
-            clearError();
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
-            try {
-                const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                document.getElementById("user-info").innerHTML = `Welcome, ${userCredential.user.email}`;
-                document.getElementById("sign-in-btn").style.display = "none";
-                document.getElementById("sign-out-btn").style.display = "inline";
-                window.location.href = "index.html";
-            } catch (error) {
-                showError("Invalid email or password. Please try again.");
-            }
-        });
+    clearError();
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    
+    // Input validation
+    if (!email || !password) {
+        showError("Please enter both email and password.");
+        return;
+    }
 
-        document.getElementById("signup-btn").addEventListener("click", () => {
-            window.location.href = "signup.html";
-        });
-
-        document.getElementById("reset-password-btn").addEventListener("click", async () => {
-            clearError();
-            const email = document.getElementById("email").value;
-            try {
-                await sendPasswordResetEmail(auth, email);
-                document.getElementById("user-info").innerHTML = `Password reset email sent to ${email}`;
-            } catch (error) {
-                showError("Unable to send reset email. Try again.");
-            }
-        });
+    try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        // On successful sign in, redirect to index page
+        window.location.href = "index.html";
+    } catch (error) {
+        console.error("Sign in error:", error);
+        // Provide more specific error messages based on the error code
+        switch (error.code) {
+            case 'auth/invalid-email':
+                showError("Please enter a valid email address.");
+                break;
+            case 'auth/user-not-found':
+                showError("No account found with this email.");
+                break;
+            case 'auth/wrong-password':
+                showError("Incorrect password. Please try again.");
+                break;
+            default:
+                showError("Sign in failed. Please try again.");
+        }
+    }
+});
     </script>
 </body>
 </html>
