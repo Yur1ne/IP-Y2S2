@@ -157,18 +157,54 @@ document.querySelector('.profile-button').addEventListener('click', function() {
     console.log('Profile button clicked!');
 });
 
-function scrollTestimonials(direction) {
-    const container = document.querySelector(".testimonials-container");
-    const scrollAmount = 370; // Adjust as needed
-    container.scrollBy({ left: direction * scrollAmount, behavior: "smooth" });
-}
+// Testimonial Carousel Logic
+document.addEventListener('DOMContentLoaded', function () {
+    const testimonialsContainer = document.querySelector(".testimonials-container");
+    const testimonialsTrack = document.querySelector(".testimonials-track");
+    const prevButton = document.querySelector(".scroll-btn.left");
+    const nextButton = document.querySelector(".scroll-btn.right");
 
-// Add this to your existing JavaScript
-document.addEventListener('DOMContentLoaded', function() {
-    const elements = document.querySelectorAll('section, .game-card');
-    elements.forEach(element => {
-        element.classList.add('fade-in');
-    });
+    if (!testimonialsContainer || !testimonialsTrack || !prevButton || !nextButton) return;
+
+    const scrollAmount = 350; // Adjust as needed
+    let scrollPosition = 0;
+
+    // Disable prev button if at the start
+    const checkScrollPosition = () => {
+        if (scrollPosition === 0) {
+            prevButton.disabled = true;
+        } else {
+            prevButton.disabled = false;
+        }
+
+        if (scrollPosition >= testimonialsTrack.scrollWidth - testimonialsContainer.clientWidth) {
+            nextButton.disabled = true;
+        } else {
+            nextButton.disabled = false;
+        }
+    };
+
+    // Scroll left or right
+    const scrollTestimonials = (direction) => {
+        scrollPosition = testimonialsContainer.scrollLeft;
+        testimonialsContainer.scrollBy({
+            left: direction * scrollAmount,
+            behavior: "smooth",
+        });
+
+        // Update scroll position after smooth scroll
+        setTimeout(() => {
+            scrollPosition = testimonialsContainer.scrollLeft;
+            checkScrollPosition();
+        }, 300);
+    };
+
+    // Initial check for disabled buttons
+    checkScrollPosition();
+
+    // Event listeners for buttons
+    prevButton.addEventListener('click', () => scrollTestimonials(-1));
+    nextButton.addEventListener('click', () => scrollTestimonials(1));
 });
 
 
@@ -180,6 +216,3 @@ function scrollTestimonials(direction) {
     const scrollAmount = 350; // Adjust as needed
     container.scrollBy({ left: direction * scrollAmount, behavior: "smooth" });
 }
-
-
-

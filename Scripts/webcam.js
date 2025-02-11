@@ -79,7 +79,6 @@ function capturePhoto() {
   alert("Photo captured!");
 }
 
-// Upload captured photo in the canvas to Supabase
 async function uploadToSupabase() {
   if (!imageData) {
     alert("No photo captured!");
@@ -96,7 +95,6 @@ async function uploadToSupabase() {
 
   try {
     // Upload to Supabase Storage
-    // *** I CHANGED '_supabase' to 'client'
     const { data, error } = await client.storage
       .from("images")
       .upload(fileName, blob);
@@ -110,12 +108,48 @@ async function uploadToSupabase() {
     const publicUrlData = client.storage.from("images").getPublicUrl(fileName);
     const publicUrl = publicUrlData.data.publicUrl;
 
-    // Store the public URL to your user's profile in Firebase
-    // *** REPLACE 'players' with your Firebase database path
-    // *** REPLACE '"detach8"' with your login userid
-    set(child(players, "detach8"), { image: publicUrl });
+    // Store the public URL to the current user's profile in Firebase
+    const userId = localStorage.getItem("userId"); // Retrieve userId from localStorage
+    if (userId) {
+      const userRef = ref(db, `users/${userId}`);
+      await set(userRef, { image: publicUrl });
+      alert("Photo uploaded successfully!");
+      window.location.href = "profile.html"; // Redirect to profile page
+    } else {
+      alert("User not logged in!");
+    }
   } catch (error) {
-    // *** I CHANGED this to alert
-    alert("Error uploading photo:", error.message);
+    alert("Error uploading photo: " + error.message);
   }
+
+
+  async function fetchUserProfile(user) {
+    let userName = user.displayName || "User";
+    const userAvatar = document.querySelector(".profile-avatar");
+
+    try {
+        const userRef = ref(db, `users/${user.uid}`);
+        onValue(userRef, (snapshot) => {
+            if (snapshot.exists()) {
+                const userData = snapshot.val();
+                
+                // Update username
+                userName = userData.username || userName;
+                document.getElementById("user-name").textContent = userName;
+
+                // Update profile picture if available
+                if (userData.image) {
+                    userAvatar.src = userData.image;
+                }
+            }
+        });
+
+        // Store user ID and username locally
+        localStorage.setItem("userId", user.uid);
+        localStorage.setItem("username", userName);
+    } catch (error) {
+        console.error("Error fetching user data:", error);
+        document.getElementById("user-name").textContent = "User";
+    }
+}
 }

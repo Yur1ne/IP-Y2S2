@@ -6,6 +6,40 @@
     <title>Webcam Capture and Upload</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="profile.css" />
+
+    <script type="module">
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+
+    const firebaseConfig = {
+    apiKey: "AIzaSyAPqBbtP-KqLLVt0NcuVIKBDDz7jJa6Bak",
+    authDomain: "ip-y2s2.firebaseapp.com",
+    databaseURL: "https://ip-y2s2-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "ip-y2s2",
+    storageBucket: "ip-y2s2.firebasestorage.app",
+    messagingSenderId: "191631267863",
+    appId: "1:191631267863:web:ada36be630772321afe452"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+
+    // Check if the user is logged in
+    onAuthStateChanged(auth, (user) => {
+    if (!user) {
+        // Redirect to the login page if the user is not logged in
+        alert("You must be logged in to access this page.");
+        window.location.href = "signin.html"; // Replace with your login page
+    } else {
+        // Store the user ID in localStorage
+        localStorage.setItem("userId", user.uid);
+    }
+    });
+    </script>
+    
     <style>
         body {
             font-family: "Inter", sans-serif;
