@@ -2,7 +2,6 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebas
 import {
   getDatabase,
   ref,
-  child,
   set,
 } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
 
@@ -20,46 +19,24 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// *** CHANGE THIS TO YOUR OWN PATH!!!
-const players = ref(db, "players");
-
 const supabaseUrl = "https://mjnybiaabxdhlsygnpdf.supabase.co";
 const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qbnliaWFhYnhkaGxzeWducGRmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzkxNzY2MzEsImV4cCI6MjA1NDc1MjYzMX0.PtVhJhKdMEHqO2ukXFjfmNS_6l0p5Q2Fcvg67TMremM";
 
-// Create a single supabase client for interacting with your database
-// *** I CHANGED THIS from '_supabase' to 'client'
 const client = supabase.createClient(supabaseUrl, supabaseAnonKey);
 
-// Get the video element
 const video = document.getElementById("webcam");
-
-// Get the capture button
 const captureButton = document.getElementById("captureButton");
-// When the capture button is clicked, call capturePhoto() function
-captureButton.addEventListener("click", capturePhoto);
-
-// Get the upload button
 const uploadButton = document.getElementById("uploadButton");
-// When the upload button is clicked, call uploadToSupabase() function
-uploadButton.addEventListener("click", uploadToSupabase);
-
-// When the page is fully loaded, call startWebcam() function
-window.addEventListener("load", startWebcam);
-
-// Get the canvas and the 2d context
+const fileInput = document.getElementById("fileInput");
 const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
 
-// Used to store the captured image data to be used later in uploadToSupabase
 let imageData;
 
 // Start the webcam
 async function startWebcam() {
   try {
-    // Get the webcam video stream from the browser
     const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-
-    // Display webcam feed
     video.srcObject = stream;
   } catch (error) {
     console.error("Error accessing webcam, check permissions:", error);
@@ -68,33 +45,43 @@ async function startWebcam() {
 
 // Capture the photo from video feed to canvas
 function capturePhoto() {
-  // Take the current frame from the video, and copy it to the canvas
   context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-  // Take the image in the canvas, and convert it to a PNG image base64 string
   imageData = canvas.toDataURL("image/png");
-
-  // Enable the upload button
   uploadButton.disabled = false;
   alert("Photo captured!");
 }
 
+// Handle file selection
+function handleFileSelect(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const img = new Image();
+    img.onload = () => {
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.drawImage(img, 0, 0, canvas.width, canvas.height);
+      imageData = canvas.toDataURL("image/png");
+      uploadButton.disabled = false;
+      alert("Photo selected from PC!");
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+// Upload to Supabase
 async function uploadToSupabase() {
   if (!imageData) {
     alert("No photo captured!");
     return;
   }
 
-  // Converting base64 image to a binary blob
   const blob = await fetch(imageData).then((res) => res.blob());
-  console.log(blob);
-
-  // Create a unique file name using the timestamp
   const fileName = `webcam/${Date.now()}.png`;
-  console.log(fileName);
 
   try {
-    // Upload to Supabase Storage
     const { data, error } = await client.storage
       .from("images")
       .upload(fileName, blob);
@@ -104,52 +91,25 @@ async function uploadToSupabase() {
       throw error;
     }
 
-    // Get public URL of the uploaded image
     const publicUrlData = client.storage.from("images").getPublicUrl(fileName);
     const publicUrl = publicUrlData.data.publicUrl;
 
-    // Store the public URL to the current user's profile in Firebase
-    const userId = localStorage.getItem("userId"); // Retrieve userId from localStorage
+    const userId = localStorage.getItem("userId");
     if (userId) {
       const userRef = ref(db, `users/${userId}`);
       await set(userRef, { image: publicUrl });
       alert("Photo uploaded successfully!");
-      window.location.href = "profile.html"; // Redirect to profile page
+      window.location.href = "profile.html";
     } else {
       alert("User not logged in!");
     }
   } catch (error) {
     alert("Error uploading photo: " + error.message);
   }
-
-
-  async function fetchUserProfile(user) {
-    let userName = user.displayName || "User";
-    const userAvatar = document.querySelector(".profile-avatar");
-
-    try {
-        const userRef = ref(db, `users/${user.uid}`);
-        onValue(userRef, (snapshot) => {
-            if (snapshot.exists()) {
-                const userData = snapshot.val();
-                
-                // Update username
-                userName = userData.username || userName;
-                document.getElementById("user-name").textContent = userName;
-
-                // Update profile picture if available
-                if (userData.image) {
-                    userAvatar.src = userData.image;
-                }
-            }
-        });
-
-        // Store user ID and username locally
-        localStorage.setItem("userId", user.uid);
-        localStorage.setItem("username", userName);
-    } catch (error) {
-        console.error("Error fetching user data:", error);
-        document.getElementById("user-name").textContent = "User";
-    }
 }
-}
+
+// Event listeners
+captureButton.addEventListener("click", capturePhoto);
+uploadButton.addEventListener("click", uploadToSupabase);
+fileInput.addEventListener("change", handleFileSelect);
+window.addEventListener("load", startWebcam);
